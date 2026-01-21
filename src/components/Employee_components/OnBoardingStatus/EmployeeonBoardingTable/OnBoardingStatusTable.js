@@ -11,7 +11,7 @@ import downarrow from '../../../../assets/Employee_asserts/onboarding_status_tab
 const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchValue }) => {
   const navigate = useNavigate();
   const [pageIndex, setPageIndex] = useState(0);
-  const pageSize = 20; 
+  const pageSize = 20;
 
   const { data: employeeData = [], isLoading, isError, error } = useOnboardingStatusQuery();
 
@@ -34,28 +34,28 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
 
     // 1. Status Filter
     if (selectedStatus && selectedStatus !== "All") {
-        const filterKey = selectedStatus.toLowerCase().trim();
-        data = data.filter((row) => {
-            const rowStatus = (row.status || "").toLowerCase().trim();
-            if (rowStatus === filterKey) return true;
-            if (filterKey === "pending with do" && rowStatus === "pending at do") return true;
-            if (filterKey === "pending with co" && rowStatus === "pending at co") return true;
-            if (filterKey === "completed" && rowStatus === "confirm") return true;
-            if (filterKey === "incomplete" && rowStatus === "incompleted") return true;
-            if (rowStatus.includes(filterKey)) return true;
-            return false;
-        });
+      const filterKey = selectedStatus.toLowerCase().trim();
+      data = data.filter((row) => {
+        const rowStatus = (row.status || "").toLowerCase().trim();
+        if (rowStatus === filterKey) return true;
+        if (filterKey === "pending with do" && rowStatus === "pending at do") return true;
+        if (filterKey === "pending with co" && rowStatus === "pending at co") return true;
+        if (filterKey === "completed" && rowStatus === "confirm") return true;
+        if (filterKey === "incomplete" && rowStatus === "incompleted") return true;
+        if (rowStatus.includes(filterKey)) return true;
+        return false;
+      });
     }
 
     // 2. Search Filter
     if (searchValue) {
-        const lowerSearch = searchValue.toLowerCase();
-        data = data.filter((row) => 
-            (row.name && row.name.toLowerCase().includes(lowerSearch)) ||
-            (row.empNo && row.empNo.toLowerCase().includes(lowerSearch)) ||
-            (row.tempPayroll && row.tempPayroll.toLowerCase().includes(lowerSearch)) ||
-            (row.payroll && row.payroll.toLowerCase().includes(lowerSearch))
-        );
+      const lowerSearch = searchValue.toLowerCase();
+      data = data.filter((row) =>
+        (row.name && row.name.toLowerCase().includes(lowerSearch)) ||
+        (row.empNo && row.empNo.toLowerCase().includes(lowerSearch)) ||
+        (row.tempPayroll && row.tempPayroll.toLowerCase().includes(lowerSearch)) ||
+        (row.payroll && row.payroll.toLowerCase().includes(lowerSearch))
+      );
     }
 
     return data;
@@ -64,10 +64,10 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
   // ... (Logic: Pagination) ...
   const total = filteredData.length;
   const totalPages = Math.max(Math.ceil(total / pageSize), 1);
-  
+
   // Ensure pageIndex is valid
   if (pageIndex >= totalPages && totalPages > 0) setPageIndex(0);
-  
+
   const start = pageIndex * pageSize;
   const end = start + pageSize;
   const pagedData = filteredData.slice(start, end);
@@ -82,7 +82,7 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
   // ... (Navigation Logic & Row Click - SAME AS BEFORE) ...
   const handleRowClick = (row) => {
     const currentStatus = (row.status || "").toLowerCase().trim();
-    const activeId = row.tempPayroll; 
+    const activeId = row.tempPayroll;
 
     if (!activeId) { console.error("No TempPayroll ID found"); return; }
 
@@ -92,16 +92,16 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
     if (role === "ADMIN") userRolePrefix = "admin";
 
     if (currentStatus === "incomplete" || currentStatus === "incompleted") {
-        navigate(`/scopes/employee/${userRolePrefix}-new-employee-onboarding/basic-info`, { state: { tempId: activeId, isEditMode: true } });
-        return;
+      navigate(`/scopes/employee/${userRolePrefix}-new-employee-onboarding/basic-info`, { state: { tempId: activeId, isEditMode: true } });
+      return;
     }
     if (currentStatus.includes("pending")) {
-        let reviewScope = "do-review";
-        if (currentStatus.includes("pending at co") || currentStatus.includes("pending with co")) reviewScope = "co-review";
-        else if (currentStatus.includes("pending at do") || currentStatus.includes("pending with do")) reviewScope = "do-review";
-        
-        navigate(`/scopes/employee/${reviewScope}/${activeId}/onboarding/working-info`);
-        return;
+      let reviewScope = "do-review";
+      if (currentStatus.includes("pending at co") || currentStatus.includes("pending with co")) reviewScope = "co-review";
+      else if (currentStatus.includes("pending at do") || currentStatus.includes("pending with do")) reviewScope = "do-review";
+
+      navigate(`/scopes/employee/${reviewScope}/${activeId}/onboarding/working-info`);
+      return;
     }
   };
 
@@ -145,8 +145,8 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
                 const isClickable = currentStatus === "incomplete" || currentStatus === "incompleted" || currentStatus.includes("pending");
 
                 return (
-                  <tr 
-                    key={row.id || index} 
+                  <tr
+                    key={row.id || index}
                     onClick={isClickable ? () => handleRowClick(row) : undefined}
                     style={{ cursor: isClickable ? "pointer" : "default" }}
                     className={isClickable ? styles.clickableRow : styles.disabledRow}
@@ -174,35 +174,35 @@ const OnBoardingStatusTable = ({ selectedStatus, role, onEmployeeSelect, searchV
           </tbody>
         </table>
       </div>
-      
+
       {/* 🔴 UPDATED PAGINATION FOOTER STRUCTURE 🔴 */}
       {total > 0 && (
         <div className={styles.paginationFooter}>
-             <span className={styles.showingText}>
-                Showing <b>{startRecord}</b> to <b>{endRecord}</b> of <b>{total}</b> Entries
-             </span>
-             
-             <div className={styles.paginationRight}>
-                <span className={styles.pageCountText}>
-                    {pageIndex + 1}-{totalPages} of {totalPages}
-                </span>
-                <div className={styles.buttonGroup}>
-                    <button 
-                        onClick={handlePrevPage} 
-                        disabled={pageIndex === 0} 
-                        className={styles.prevBtn}
-                    >
-                        Prev
-                    </button>
-                    <button 
-                        onClick={handleNextPage} 
-                        disabled={pageIndex >= totalPages - 1} 
-                        className={styles.nextBtn}
-                    >
-                        Next
-                    </button>
-                </div>
-             </div>
+          <span className={styles.showingText}>
+            Showing <b>{startRecord}</b> to <b>{endRecord}</b> of <b>{total}</b> Entries
+          </span>
+
+          <div className={styles.paginationRight}>
+            <span className={styles.pageCountText}>
+              {pageIndex + 1}-{totalPages} of {totalPages}
+            </span>
+            <div className={styles.buttonGroup}>
+              <button
+                onClick={handlePrevPage}
+                disabled={pageIndex === 0}
+                className={styles.prevBtn}
+              >
+                Prev
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={pageIndex >= totalPages - 1}
+                className={styles.nextBtn}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

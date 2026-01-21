@@ -19,6 +19,8 @@ import EmployeeModuleContainer from "../src/containers/Employee_containers/Emplo
 import EmployeeOnBoardingContainer from "../src/containers/Employee_containers/EmployeeOnBoarding-container/EmployeeOnBoardingContainer";
 import EmployeeOverviewHRContainer from "../src/containers/Employee_containers/EmployeeOverviewContainer/EmployeeModuleConatianer";
 import EmployeeLanding from "../src/components/Employee_components/EmployeeLandingPage/EmployeeLanding";
+import SkillTestProfileContainer from
+  "../src/containers/Employee_containers/SkillTestProfileContainer/SkillTestProfileContainer";
 
 
 // 🆕 IMPORT THE SKILL TEST FORM PAGE
@@ -156,6 +158,14 @@ function AppWrapper() {
           />
 
           {/* 7. GENERIC CATCH-ALL */}
+          <Route
+            path="/scopes/employee/skill-test-profile/:tempPayroll"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO", "HR", "ADMIN"]}>
+                <SkillTestProfileContainer />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/scopes/employee/*" element={<ProtectedRoute allowedRoles={["DO", "CO", "HR", "ADMIN"]}><EmployeeOnBoardingContainer role="DO" /></ProtectedRoute>} />
         </Routes>
       </main>

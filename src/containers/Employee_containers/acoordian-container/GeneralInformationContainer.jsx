@@ -7,6 +7,7 @@ import bottomdecoration from '../../../assets/Employee_asserts/RightSideInformat
 import BankDetails from "../../../components/Employee_components/EmployeeOverViewScreens/BankInfoComponent/BankDetailsAccordian";
 import ReferenceBy from "../../../components/Employee_components/EmployeeOverViewScreens/BankInfoComponent/ReferenceByAccordian";
 
+
 import { useEmployeeReferenceBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
 
 const BankGeneralInfoContainer = ({ employeeId }) => {
@@ -33,6 +34,9 @@ const BankGeneralInfoContainer = ({ employeeId }) => {
           isLoading={isLoading}
           isError={isError}
         />
+
+  
+
       </div>
       <figure className={styles.bottom_decoration}>
         <img src={bottomdecoration} alt="Bottom Decoration" />

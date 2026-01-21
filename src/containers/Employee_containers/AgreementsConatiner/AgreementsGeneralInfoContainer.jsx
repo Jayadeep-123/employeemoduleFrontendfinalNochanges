@@ -7,7 +7,7 @@ import bottomdecoration from '../../../assets/Employee_asserts/RightSideInformat
 import ReferenceBy from "../../../components/Employee_components/EmployeeOverViewScreens/BankInfoComponent/ReferenceByAccordian";
 
 import { useEmployeeReferenceBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
-
+import HiredBy from "../../../components/Employee_components/EmployeeOverViewScreens/EmployeeQualificationDetails/HiredBy";
 const AgreementsGeneralInfoContainer = ({ employeeId }) => {
   const [expanded, setExpanded] = useState(null);
   const { data: referenceData, isLoading, isError } = useEmployeeReferenceBy(employeeId);
@@ -29,6 +29,16 @@ const AgreementsGeneralInfoContainer = ({ employeeId }) => {
           isLoading={isLoading}
           isError={isError}
         />
+        <HiredBy
+        expanded={expanded === "hiredBy"}
+        onChange={(e, isOpen) =>
+          setExpanded(isOpen ? "hiredBy" : null)
+        }
+        referenceData={referenceData}
+        isLoading={isLoading}
+        isError={isError}
+      />
+        
       </div>
 
       <figure className={styles.bottom_decoration}>

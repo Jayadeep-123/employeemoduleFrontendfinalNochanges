@@ -23,7 +23,7 @@ const PreviousEmployeeInfo = ({ employeeId, expanded, onChange }) => {
   const phoneNumber = "1234567890";
   const email = "suresh@gmail.com";
 
-  if (isLoading) return null;
+  if (isLoading || !previousEmployers || previousEmployers.length === 0) return null;
 
   return (
     <Accordion

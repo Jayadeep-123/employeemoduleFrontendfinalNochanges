@@ -5,6 +5,7 @@ import SameInstutionEmployees from "./SameInstutionEmployees";
 import React, { useState } from "react";
 import endline from "../../../../assets/Employee_asserts/RightSideInformation Icons/endline.svg";
 import { useEmployeeReferenceBy } from "../../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import HiredBy from "./HiredBy";
 
 
 const EmployeeQualificationRightside = ({ employeeId }) => {
@@ -32,8 +33,22 @@ const EmployeeQualificationRightside = ({ employeeId }) => {
         isError={isError}
       />
 
+
+      <HiredBy
+        expanded={expanded === "HiredBy"}
+        onChange={handleChange("HiredBy")}
+        referenceData={referenceData}
+        isLoading={isLoading}
+        isError={isError}
+      />
+
       <img src={endline} alt="Example" />
+
+
+
     </div>
+
+
   );
 };
 

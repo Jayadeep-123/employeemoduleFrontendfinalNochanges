@@ -143,6 +143,17 @@ export const useSubjects = () => {
     });
 };
 
+// 12. Skill Test Approval List
+export const useSkillTestApprovalList = () => {
+    return useQuery({
+        queryKey: ["skillTestApprovalList"],
+        queryFn: async () => {
+            const response = await axios.get("http://localhost:8080/api/v1/skill-details/passed_employess/skilltestApprovalTable/");
+            return response.data;
+        }
+    });
+};
+
 // Helper to bundle all lookups if needed, or can be used individually
 export const useSkillTestQueries = (cityId, campusId) => {
     return {
@@ -156,3 +167,19 @@ export const useSkillTestQueries = (cityId, campusId) => {
         buildings: useBuildings(campusId),
     };
 };
+
+export const useSkillApprovalEmployeeDetails = (tempPayroll) => {
+    return useQuery({
+        queryKey: ["skillApprovalEmployee", tempPayroll],
+        queryFn: async () => {
+            if (!tempPayroll) return null; // prevent calling API with undefined
+            const res = await axios.get(
+                `http://localhost:8080/api/v1/skill-details/employee/${tempPayroll}`
+            );
+            return res.data;
+        },
+        enabled: !!tempPayroll
+    });
+};
+
+

@@ -4,30 +4,30 @@ import rightarrow from "../../../../../assets/Employee_asserts/onboarding_status
 import uparrow from "../../../../../assets/Employee_asserts/onboarding_status_table/uparrow.svg";
 import downarrow from "../../../../../assets/Employee_asserts/onboarding_status_table/downarrow.svg";
 
+import { useSkillTestApprovalList } from "../../../../../queries/Employee_queries/EmployeeSkillTest";
+
 const SkillTestApprovalTable = ({ selectedStatus, role, onEmployeeSelect }) => {
     const [pageIndex, setPageIndex] = useState(0);
 
-    // 🔴 ADDED 'id' property (Essential for routing)
-    const employeeTemplates = [
-        {
-            id: "201",
-            name: "Ravi", empNo: "HYD100001", tempPayroll: "TEMP10001",
-            joinDate: "28 June 2025", city: "Hyderabad",
-            campus: "Miyapur Girls Res.", gender: "Male",
-            status: "Skill Test Approval", // Triggers skill route
-            skillTest: true
-        },
-        {
-            id: "202",
-            name: "Priya", empNo: "HYD100002", tempPayroll: "TEMP10002",
-            joinDate: "14 March 2023", city: "Hyderabad",
-            campus: "Miyapur Girls Res.", gender: "Female",
-            status: "Skill Test Approved",
-            skillTest: true
-        },
-    ];
+    const { data: apiData, isLoading } = useSkillTestApprovalList();
 
-    const data = employeeTemplates;
+    const data = useMemo(() => {
+        if (!apiData) return [];
+        return apiData.map((item, index) => ({
+            // Mapping based on user provided JSON
+            id: item.tempPayrollId || index,
+            name: item.employeeName,
+            empNo: item.employeeNumber || "N/A",
+            tempPayroll: item.tempPayrollId,
+            joinDate: item.joinDate,
+            city: item.city,
+            campus: item.campus,
+            gender: item.gender,
+            status: item.status || "Skill Test Approval",
+            skillTest: true,
+            ...item
+        }));
+    }, [apiData]);
     const pageSize = 10;
     const total = data.length;
     const pagedData = data.slice(0, pageSize); // Simplified pagination for brevity
