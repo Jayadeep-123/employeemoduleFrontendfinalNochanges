@@ -4,12 +4,16 @@ import rightSideIcon from '../../../../assets/Employee_asserts/EmployeeQu/rights
 import rightSideBottomIcon from '../../../../assets/Employee_asserts/EmployeeQu/rightSideBottomIcon.svg';
 import ReferenceDetailsDocuments from "./ReferencedBy";
 import PendingDocuments from "./PendingDocuments";
-import { useEmployeeReferenceBy } from "../../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import { useEmployeeReferenceBy, useEmployeeHiredBy } from "../../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import HiredBy from "../EmployeeQualificationDetails/HiredBy";
 
 const DocumentsRightSide = ({ employeeId }) => {
   const [expandedPending, setExpandedPending] = useState(false);
   const [expandedReference, setExpandedReference] = useState(false);
+  const [expandedHiredBy, setExpandedHiredBy] = useState(false);
+
   const { data: referenceData, isLoading, isError } = useEmployeeReferenceBy(employeeId);
+  const { data: hiredByData, isLoading: isHiredByLoading, isError: isHiredByError } = useEmployeeHiredBy(employeeId);
 
   const handlePendingChange = (event, isExpanded) => {
     setExpandedPending(isExpanded);
@@ -17,6 +21,10 @@ const DocumentsRightSide = ({ employeeId }) => {
 
   const handleReferenceChange = (event, isExpanded) => {
     setExpandedReference(isExpanded);
+  };
+
+  const handleHiredByChange = (event, isExpanded) => {
+    setExpandedHiredBy(isExpanded);
   };
 
   return (
@@ -40,6 +48,15 @@ const DocumentsRightSide = ({ employeeId }) => {
           referenceData={referenceData}
           isLoading={isLoading}
           isError={isError}
+        />
+
+        {/* ✅ Hired By Details (controlled) */}
+        <HiredBy
+          expanded={expandedHiredBy}
+          onChange={handleHiredByChange}
+          referenceData={hiredByData}
+          isLoading={isHiredByLoading}
+          isError={isHiredByError}
         />
       </div>
 

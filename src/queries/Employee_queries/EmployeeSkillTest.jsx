@@ -132,6 +132,16 @@ export const useSaveSkillTestDetails = () => {
     });
 };
 
+// 13. Sync Employee DB
+export const useSyncEmployeeDb = () => {
+    return useMutation({
+        mutationFn: async (tempId) => {
+            const response = await axios.get(`http://localhost:8080/api/integration/sync-db-employee?id=${tempId}`);
+            return response.data;
+        }
+    });
+};
+
 // 11. Subjects
 export const useSubjects = () => {
     return useQuery({
@@ -174,11 +184,38 @@ export const useSkillApprovalEmployeeDetails = (tempPayroll) => {
         queryFn: async () => {
             if (!tempPayroll) return null; // prevent calling API with undefined
             const res = await axios.get(
-                `http://localhost:8080/api/v1/skill-details/employee/${tempPayroll}`
+                `http://localhost:8080/api/v1/skill-details/approval/${tempPayroll}`
             );
             return res.data;
         },
         enabled: !!tempPayroll
+    });
+};
+
+export const useSkillTestResults = (tempPayroll) => {
+    return useQuery({
+        queryKey: ["skillTestResults", tempPayroll],
+        queryFn: async () => {
+            if (!tempPayroll) return null;
+            const res = await axios.get(
+                `http://localhost:8080/api/v1/skill-details/results/${tempPayroll}`
+            );
+            return res.data;
+        },
+        enabled: !!tempPayroll
+    });
+};
+
+// 14. Approve Skill Test
+export const useApproveSkillTest = () => {
+    return useMutation({
+        mutationFn: async (tempPayroll) => {
+            if (!tempPayroll) throw new Error("Temp Payroll ID is required");
+            const response = await axios.post(
+                `http://localhost:8080/api/v1/skill-details/approve/${tempPayroll}`
+            );
+            return response.data;
+        }
     });
 };
 

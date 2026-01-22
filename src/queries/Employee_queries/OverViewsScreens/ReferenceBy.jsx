@@ -15,3 +15,16 @@ export const useEmployeeReferenceBy = (employeeId) => {
         retry: false,
     });
 };
+export const useEmployeeHiredBy = (employeeId) => {
+    return useQuery({
+        queryKey: ["employeeHiredBy", employeeId],
+        queryFn: async () => {
+            const response = await axios.get(
+                `http://localhost:8080/empDetails/HR/hired-by/${employeeId}`
+            );
+            return response.data;
+        },
+        enabled: !!employeeId,
+        retry: false,
+    });
+};

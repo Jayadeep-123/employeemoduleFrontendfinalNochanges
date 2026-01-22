@@ -4,7 +4,7 @@ import righticon from "../../../assets/Employee_asserts/EmployeeQu/righticonsvg.
 import greendot from "../../../assets/Employee_asserts/EmployeeQu/greendotsvg.svg";
 import downloadicon from "../../../assets/Employee_asserts/EmployeeQu/downloadblueicon.svg"
 
-const EmpViewDocumentCard = ({ heading, updatedDate }) => {
+const EmpViewDocumentCard = ({ heading, updatedDate, actionIcon }) => {
     return (
         <div className={styles.empViewDocumentCard}>
             <div className={styles.documentCardTop}>
@@ -29,7 +29,7 @@ const EmpViewDocumentCard = ({ heading, updatedDate }) => {
                     <img src={greendot} alt="success" />
                     <p>Verified</p>
                 </div>
-                <img src={downloadicon} alt="downloadIcon" />
+                <img src={actionIcon || downloadicon} alt="actionIcon" />
             </div>
         </div>
     )

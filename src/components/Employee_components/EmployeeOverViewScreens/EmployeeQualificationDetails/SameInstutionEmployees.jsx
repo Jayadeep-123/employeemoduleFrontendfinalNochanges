@@ -14,36 +14,21 @@ import rightDividerIcon from "../../../../assets/Employee_asserts/Family/divider
 import leftDividerIcon from "../../../../assets/Employee_asserts/Family/dividerLeftImg.svg";
 import profileIcon from "../../../../assets/Employee_asserts/Family/profile.svg";
 
-const employees = [
-  {
-    name: "Venkateswarao Boppana",
-    emp_id: "EMP ID: HYD 09817298",
-    role: "Testing Engineer",
-    phoneNumber: "+91 9876543210",
-    email: "venkatBoppana@example.com",
-  },
-  {
-    name: "Suresh Kumar",
-    emp_id: "EMP ID: HYD 09817299",
-    role: "Senior Engineer",
-    phoneNumber: "+91 9876543211",
-    email: "suresh@example.com",
-  },
-  {
-    name: "Ravi Teja",
-    emp_id: "EMP ID: HYD 09817300",
-    role: "Lead Engineer",
-    phoneNumber: "+91 9876543212",
-    email: "ravi@example.com",
-  },
-  // 👉 add more employees here
-];
+const SameInstutionEmployees = ({ expanded, onChange, sameInstituteData, isLoading, isError }) => {
 
-const SameInstutionEmployees = ({ expanded, onChange }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = employees.length;
 
-  const currentEmployee = employees[currentPage - 1];
+  if (isLoading) return null;
+  if (isError || !sameInstituteData || !sameInstituteData.employees || sameInstituteData.employees.length === 0) {
+    return null;
+  }
+
+  // Limit to first 3 employees
+  const employeesToDisplay = sameInstituteData.employees.slice(0, 3);
+  const totalPages = employeesToDisplay.length;
+  const instituteName = sameInstituteData.institute || "Same Institute";
+
+  const currentEmployee = employeesToDisplay[currentPage - 1];
 
   const handlePrev = () => {
     if (currentPage > 1) {
@@ -93,7 +78,7 @@ const SameInstutionEmployees = ({ expanded, onChange }) => {
             <div className={styles.header_left}>
               <img src={accordionheadericon} alt="accordion icon" />
               <p className={styles.header_text}>
-                Samne Institution Employees
+                {instituteName} Employees
               </p>
             </div>
 
@@ -122,11 +107,11 @@ const SameInstutionEmployees = ({ expanded, onChange }) => {
             <div className={styles.driver_cards}>
               <EmployeeDetailsCard
                 titleLable="Employee Name"
-                name={currentEmployee.name}
-                emp_id={currentEmployee.emp_id}
-                role={currentEmployee.role}
-                phoneNumber={currentEmployee.phoneNumber}
-                email={currentEmployee.email}
+                name={`${currentEmployee.firstName} ${currentEmployee.lastName}`}
+                emp_id={`EMP ID: ${currentEmployee.payrollId}`}
+                role={currentEmployee.designationName || "N/A"}
+                phoneNumber={currentEmployee.primaryMobileNo ? `+91 ${currentEmployee.primaryMobileNo}` : "N/A"}
+                email={currentEmployee.email || "N/A"}
                 profileIcon={profileIcon}
                 leftDividerIcon={leftDividerIcon}
                 rightDividerIcon={rightDividerIcon}

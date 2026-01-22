@@ -9,8 +9,9 @@ import ReferenceDetails from "../../../components/Employee_components/EmployeeOv
 import FamilyDetails from "../../../components/Employee_components/EmployeeOverViewScreens/FamilyAddressInfoComponets/accordiansFamily&Address/FamilyDetails";
 
 import { useEmployeeFamilyDetails } from "../../../queries/Employee_queries/OverViewsScreens/FamilyDetails";
-import { useEmployeeReferenceBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import { useEmployeeReferenceBy, useEmployeeHiredBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
 import { useFamilyMembersInOrg } from "../../../queries/Employee_queries/OverViewsScreens/FamilyMembersInOrg";
+import HiredBy from "../../../components/Employee_components/EmployeeOverViewScreens/EmployeeQualificationDetails/HiredBy";
 
 const GeneralInfoContainer = ({ employeeId }) => {
   const [expanded, setExpanded] = useState(null);
@@ -18,6 +19,7 @@ const GeneralInfoContainer = ({ employeeId }) => {
   // Fetch details using API hooks
   const { data: familyData, isLoading: isFamilyLoading, isError: isFamilyError } = useEmployeeFamilyDetails(employeeId);
   const { data: referenceData, isLoading: isRefLoading, isError: isRefError } = useEmployeeReferenceBy(employeeId);
+  const { data: hiredByData, isLoading: isHiredByLoading, isError: isHiredByError } = useEmployeeHiredBy(employeeId);
   const { data: familyInOrgData, isLoading: isOrgLoading, isError: isOrgError } = useFamilyMembersInOrg(employeeId);
 
   return (
@@ -49,6 +51,13 @@ const GeneralInfoContainer = ({ employeeId }) => {
           referenceData={referenceData}
           isLoading={isRefLoading}
           isError={isRefError}
+        />
+        <HiredBy
+          expanded={expanded === "hiredBy"}
+          onChange={(e, isOpen) => setExpanded(isOpen ? "hiredBy" : null)}
+          referenceData={hiredByData}
+          isLoading={isHiredByLoading}
+          isError={isHiredByError}
         />
 
       </div>

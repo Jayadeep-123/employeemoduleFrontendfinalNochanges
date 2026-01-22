@@ -1,5 +1,6 @@
 import styles from "./FIlledForms.module.css";
 import EmpViewDocumentCard from "../../../../../widgets/Employee_widgets/EmpViewDocumentsCard/EmpViewDocumentCard";
+import viewicon from "../../../../../assets/Employee_asserts/EmployeeQu/view_icon.svg";
 
 const FilledForms = () => {
   const filledFormsDocuments = [
@@ -46,6 +47,7 @@ const FilledForms = () => {
             key={document.id} // Required for list items
             heading={document.heading}
             updatedDate={document.updatedDate}
+            actionIcon={viewicon}
           />
         );
       })}

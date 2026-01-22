@@ -24,7 +24,8 @@ import {
     useOrientationGroups,
     useBuildings,
     useSubjects,
-    useSaveSkillTestDetails
+    useSaveSkillTestDetails,
+    useSyncEmployeeDb
 } from '../../../queries/Employee_queries/EmployeeSkillTest';
 
 const CalendarIcon = () => (<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.05263 10.0007C5.33181 10.0007 5.59955 9.91285 5.79695 9.75657C5.99436 9.60029 6.10526 9.38833 6.10526 9.16732C6.10526 8.9463 5.99436 8.73434 5.79695 8.57806C5.59955 8.42178 5.33181 8.33398 5.05263 8.33398C4.77346 8.33398 4.50572 8.42178 4.30831 8.57806C4.1109 8.73434 4 8.9463 4 9.16732C4 9.38833 4.1109 9.60029 4.30831 9.75657C4.50572 9.91285 4.77346 10.0007 5.05263 10.0007ZM5.05263 12.334C5.33181 12.334 5.59955 12.2462 5.79695 12.0899C5.99436 11.9336 6.10526 11.7217 6.10526 11.5007C6.10526 11.2796 5.99436 11.0677 5.79695 10.9114C5.59955 10.7551 5.33181 10.6673 5.05263 10.6673C4.77346 10.6673 4.50572 10.7551 4.30831 10.9114C4.1109 11.0677 4 11.2796 4 11.5007C4 11.7217 4.1109 11.9336 4.30831 12.0899C4.50572 12.2462 4.77346 12.334 5.05263 12.334ZM9.05263 9.16732C9.05263 9.38833 8.94173 9.60029 8.74432 9.75657C8.54692 9.91285 8.27918 10.0007 8 10.0007C7.72082 10.0007 7.45308 9.91285 7.25568 9.75657C7.05827 9.60029 6.94737 9.38833 6.94737 9.16732C6.94737 8.9463 7.05827 8.73434 7.25568 8.57806C7.45308 8.42178 7.72082 8.33398 8 8.33398C8.27918 8.33398 8.54692 8.42178 8.74432 8.57806C8.94173 8.73434 9.05263 8.9463 9.05263 9.16732ZM8 12.334C8.27918 12.334 8.54692 12.2462 8.74432 12.0899C8.94173 11.9336 9.05263 11.7217 9.05263 11.5007C9.05263 11.2796 8.94173 11.0677 8.74432 10.9114C8.54692 10.7551 8.27918 10.6673 8 10.6673C7.72082 10.6673 7.45308 10.7551 7.25568 10.9114C7.05827 11.0677 6.94737 11.2796 6.94737 11.5007C6.94737 11.7217 7.05827 11.9336 7.25568 12.0899C7.45308 12.2462 7.72082 12.334 8 12.334ZM12 9.16732C12 9.38833 11.8891 9.60029 11.6917 9.75657C11.4943 9.91285 11.2265 10.0007 10.9474 10.0007C10.6682 10.0007 10.4005 9.91285 10.203 9.75657C10.0056 9.60029 9.89474 9.38833 9.89474 9.16732C9.89474 8.9463 10.0056 8.73434 10.203 8.57806C10.4005 8.42178 10.6682 8.33398 10.9474 8.33398C11.2265 8.33398 11.4943 8.42178 11.6917 8.57806C11.8891 8.73434 12 8.9463 12 9.16732Z" fill="#4E4E4E" stroke="white" strokeWidth="0.2" /><path fillRule="evenodd" clipRule="evenodd" d="M4.90323 1.33398C5.05722 1.33398 5.20491 1.39441 5.3138 1.50197C5.4227 1.60952 5.48387 1.7554 5.48387 1.90751V2.48104H10.5161V1.90751C10.5161 1.7554 10.5773 1.60952 10.6862 1.50197C10.7951 1.39441 10.9428 1.33398 11.0968 1.33398C11.2508 1.33398 11.3985 1.39441 11.5074 1.50197C11.6162 1.60952 11.6774 1.7554 11.6774 1.90751V2.48716C11.7951 2.49022 11.9048 2.49583 12.0065 2.50398C12.3006 2.52693 12.5763 2.57893 12.8372 2.71046C13.2378 2.91209 13.5636 3.23386 13.7677 3.62963C13.9009 3.88734 13.9535 4.15957 13.9768 4.45016C14 4.72928 14 5.06957 14 5.47869V11.3363C14 11.7455 14 12.0857 13.9768 12.3649C13.9535 12.6555 13.9009 12.9277 13.7677 13.1854C13.5638 13.5811 13.2383 13.9028 12.8379 14.1046C12.5763 14.2361 12.3006 14.2881 12.0065 14.311C11.7239 14.334 11.3794 14.334 10.9659 14.334H5.03484C4.62065 14.334 4.27613 14.334 3.99355 14.311C3.69935 14.2881 3.42374 14.2361 3.16284 14.1046C2.76239 13.9033 2.43665 13.5821 2.23226 13.1869C2.0991 12.9285 2.04645 12.6562 2.02323 12.3656C2 12.0865 2 11.7462 2 11.3379V5.47869C2 5.06957 2 4.72928 2.02323 4.45016C2.04645 4.15957 2.0991 3.88734 2.23226 3.62963C2.43639 3.23386 2.76215 2.91209 3.16284 2.71046C3.42374 2.57893 3.69935 2.52693 3.99355 2.50398C4.09523 2.49583 4.2049 2.49022 4.32258 2.48716V1.90751C4.32258 1.8322 4.3376 1.75762 4.36678 1.68803C4.39596 1.61845 4.43873 1.55522 4.49265 1.50197C4.54657 1.44871 4.61058 1.40646 4.68102 1.37764C4.75147 1.34882 4.82697 1.33398 4.90323 1.33398ZM4.32258 3.81928V3.63422C4.24429 3.6366 4.16607 3.64093 4.088 3.64722C3.86581 3.66481 3.75974 3.69693 3.69006 3.7321C3.50768 3.8238 3.35941 3.97024 3.26658 4.1504C3.23097 4.21922 3.19845 4.32398 3.18065 4.54346C3.16206 4.76981 3.16129 5.06345 3.16129 5.50163V5.92222H12.8387V5.50163C12.8387 5.06422 12.8387 4.76981 12.8194 4.54346C12.8015 4.32398 12.769 4.21922 12.7334 4.1504C12.6406 3.97024 12.4923 3.8238 12.3099 3.7321C12.2403 3.69693 12.1342 3.66481 11.9112 3.64722C11.8334 3.64095 11.7555 3.63661 11.6774 3.63422V3.81928C11.6774 3.97139 11.6162 4.11727 11.5074 4.22483C11.3985 4.33238 11.2508 4.39281 11.0968 4.39281C10.9428 4.39281 10.7951 4.33238 10.6862 4.22483C10.5773 4.11727 10.5161 3.97139 10.5161 3.81928V3.6281H5.48387V3.81928C5.48387 3.97139 5.4227 4.11727 5.3138 4.22483C5.20491 4.33238 5.05722 4.39281 4.90323 4.39281C4.74923 4.39281 4.60154 4.33238 4.49265 4.22483C4.38376 4.11727 4.32258 3.97139 4.32258 3.81928ZM12.8387 6.68693H3.16129V11.3134C3.16129 11.7508 3.16129 12.0452 3.18065 12.2708C3.19845 12.491 3.23097 12.5958 3.26658 12.6646C3.35948 12.8451 3.50735 12.9912 3.69006 13.0829C3.75974 13.1181 3.86581 13.1502 4.088 13.1678C4.31716 13.1862 4.61445 13.1869 5.05806 13.1869H10.9419C11.3848 13.1869 11.6828 13.1869 11.9112 13.1678C12.1342 13.1502 12.2403 13.1181 12.3099 13.0829C12.4923 12.9912 12.6406 12.8448 12.7334 12.6646C12.769 12.5958 12.8015 12.491 12.8194 12.2708C12.8379 12.0452 12.8387 11.7508 12.8387 11.3134V6.68693Z" fill="#4E4E4E" stroke="white" strokeWidth="0.2" /></svg>);
@@ -58,11 +59,9 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
     // Personal Information
-    aadhaarNo: Yup.number()
+    aadhaarNo: Yup.string()
         .required('Aadhaar number is required')
-        .test('len', 'Aadhaar must be exactly 12 digits', val => val && val.toString().length === 12)
-        .positive('Aadhaar number must be positive')
-        .integer('Aadhaar number must be a whole number'),
+        .matches(/^[0-9]{12}$/, 'Aadhaar must be exactly 12 digits'),
 
     previousChaitanyaId: Yup.string()
         .nullable()
@@ -95,20 +94,18 @@ const validationSchema = Yup.object().shape({
             return age >= 18;
         }),
 
-    contactNumber: Yup.number()
+    contactNumber: Yup.string()
         .required('Contact Number is required')
-        .test('len', 'Contact number must be exactly 10 digits', val => val && val.toString().length === 10)
-        .positive('Contact number must be positive')
-        .integer('Contact number must be a whole number'),
+        .matches(/^[0-9]{10}$/, 'Contact number must be exactly 10 digits'),
 
     email: Yup.string()
         .required('Email is required')
         .email('Invalid email format')
         .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address'),
 
-    gender: Yup.string()
+    gender: Yup.number()
         .required('Gender is required')
-        .oneOf(['Male', 'Female'], 'Please select a valid gender'),
+        .oneOf([1, 2], 'Please select a valid gender'),
 
     qualificationId: Yup.number()
         .required('Qualification is required')
@@ -223,7 +220,7 @@ const JoiningAsWatcher = ({ joiningTypeOptions, setIsNewJoiner }) => {
 // Placeholders / Hardcoded options
 // 'Teach' hardcoded for employment type
 const empTypeOptions = [{ label: 'Teach', value: 1 }];
-const genderOptions = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
+const genderOptions = [{ label: 'Male', value: 1 }, { label: 'Female', value: 2 }];
 
 const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = false }, ref) => {
     const formikRef = useRef();
@@ -248,6 +245,7 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
     const { data: subjectsList } = useSubjects();
 
     const { mutate: saveSkillTest } = useSaveSkillTestDetails();
+    const { mutate: syncEmployee } = useSyncEmployeeDb();
 
     useImperativeHandle(ref, () => ({
         submitForm: () => {
@@ -294,7 +292,7 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
         payload.totalExperience = Number(payload.totalExperience);
 
         // Map gender string to genderId for API
-        payload.genderId = values.gender === 'Male' ? 1 : values.gender === 'Female' ? 2 : 0;
+        payload.genderId = values.gender;
         delete payload.gender; // Remove gender field, use genderId instead
 
         // TODO: Replace hardcoded employee ID with authenticated user ID from auth context
@@ -305,13 +303,48 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
         // Ensure createdBy is set
         payload.createdBy = employeeId;
 
+        console.log("--- SKILL TEST SUBMISSION STARTED ---");
+        console.log("REQUEST OBJECT (to Backend):", payload);
+
         saveSkillTest({ id: employeeId, data: payload }, {
             onSuccess: (data) => {
+                console.log("--- SKILL TEST SAVE SUCCESS ---");
+                console.log("STATUS: Data successfully saved to first API.");
+                console.log("RESPONSE OBJECT:", data);
+
+                // Trigger database synchronization after successful save
+                // Extract tempId/payrollId from response data
+                console.log("DEBUG: Full Save Response Data:", data);
+                const tempId = data?.payrollId || data?.id || data?.pid || data?.tempPayrollId;
+                console.log("DEBUG: Extracted tempId:", tempId);
+
+                if (tempId) {
+                    console.log(`--- DATABASE SYNC INITIATED ---`);
+                    console.log(`SYNCING FOR ID: ${tempId}`);
+
+                    syncEmployee(tempId, {
+                        onSuccess: (syncData) => {
+                            console.log("--- DATABASE SYNC SUCCESS ---");
+                            console.log("STATUS: Employee data successfully pushed to epraghna/synced.");
+                            console.log("SYNC RESPONSE OBJECT:", syncData);
+                        },
+                        onError: (syncErr) => {
+                            console.log("--- DATABASE SYNC FAILED ---");
+                            console.error("SYNC ERROR STATUS:", syncErr.response?.status || "Unknown");
+                            console.error("SYNC ERROR RESPONSE:", syncErr.response?.data || syncErr.message);
+                        }
+                    });
+                } else {
+                    console.warn("WARNING: No Temp ID found in save response. Sync API skipped.");
+                }
+
                 if (onSubmitSuccess) onSubmitSuccess(data);
                 setSubmitting(false);
             },
             onError: (err) => {
-                console.error(err);
+                console.log("--- SKILL TEST SAVE FAILED ---");
+                console.error("ERROR STATUS:", err.response?.status || "Unknown");
+                console.error("ERROR RESPONSE:", err.response?.data || err.message);
                 setSubmitting(false);
             }
         });
@@ -338,7 +371,7 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
 
                         {/* --- Row 1 --- */}
                         <div className={styles.fieldWrapper}>
-                            <Field name="aadhaarNo" component={FormikInputbox} label="Aadhaar No" placeholder="Enter Aadhaar number" />
+                            <Field name="aadhaarNo" component={FormikInputbox} label="Aadhaar No" placeholder="Enter Aadhaar number" inputRule="digits" maxLength={12} />
                             <ErrorMessage name="aadhaarNo" component="div" className={styles.error} />
                         </div>
                         <div className={styles.fieldWrapper}>
@@ -355,6 +388,7 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
                                 isSubmitted={false}
                                 externalErrors={{}}
                                 onClearFieldError={() => { }}
+                                name="gender"
                             />
 
                         </div>
@@ -369,13 +403,13 @@ const SkillTestForm = forwardRef(({ onSubmitSuccess, onBack, isSubmitting = fals
                             <ErrorMessage name="lastName" component="div" className={styles.error} />
                         </div>
                         <div className={styles.fieldWrapper}>
-                            <Field name="dob" component={FormikInputbox} label="Date of Birth" placeholder="YYYY-MM-DD" rightIcon={<CalendarIcon />} />
+                            <Field name="dob" component={FormikInputbox} label="Date of Birth" placeholder="YYYY-MM-DD" type="date" />
                             <ErrorMessage name="dob" component="div" className={styles.error} />
                         </div>
 
                         {/* --- Row 3 --- */}
                         <div className={styles.fieldWrapper}>
-                            <Field name="contactNumber" component={FormikInputbox} label="Contact Number" placeholder="Enter number" rightIcon={<PhoneIcon />} />
+                            <Field name="contactNumber" component={FormikInputbox} label="Contact Number" placeholder="Enter number" rightIcon={<PhoneIcon />} inputRule="digits" maxLength={10} />
                             <ErrorMessage name="contactNumber" component="div" className={styles.error} />
                         </div>
                         <div className={styles.fieldWrapper}>

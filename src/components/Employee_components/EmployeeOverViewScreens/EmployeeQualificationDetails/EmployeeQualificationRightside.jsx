@@ -4,13 +4,16 @@ import ReferredBy from "./ReferredBy";
 import SameInstutionEmployees from "./SameInstutionEmployees";
 import React, { useState } from "react";
 import endline from "../../../../assets/Employee_asserts/RightSideInformation Icons/endline.svg";
-import { useEmployeeReferenceBy } from "../../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import { useEmployeeReferenceBy, useEmployeeHiredBy } from "../../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import { useSameInstituteEmployees } from "../../../../queries/Employee_queries/OverViewsScreens/SameInstitute";
 import HiredBy from "./HiredBy";
 
 
 const EmployeeQualificationRightside = ({ employeeId }) => {
   const [expanded, setExpanded] = useState(null);
   const { data: referenceData, isLoading, isError } = useEmployeeReferenceBy(employeeId);
+  const { data: hiredByData, isLoading: isHiredByLoading, isError: isHiredByError } = useEmployeeHiredBy(employeeId);
+  const { data: sameInstituteData, isLoading: isSameInstLoading, isError: isSameInstError } = useSameInstituteEmployees(employeeId);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
@@ -23,6 +26,9 @@ const EmployeeQualificationRightside = ({ employeeId }) => {
       <SameInstutionEmployees
         expanded={expanded === "SameInstutionEmployees"}
         onChange={handleChange("SameInstutionEmployees")}
+        sameInstituteData={sameInstituteData}
+        isLoading={isSameInstLoading}
+        isError={isSameInstError}
       />
 
       <ReferredBy
@@ -37,9 +43,9 @@ const EmployeeQualificationRightside = ({ employeeId }) => {
       <HiredBy
         expanded={expanded === "HiredBy"}
         onChange={handleChange("HiredBy")}
-        referenceData={referenceData}
-        isLoading={isLoading}
-        isError={isError}
+        referenceData={hiredByData}
+        isLoading={isHiredByLoading}
+        isError={isHiredByError}
       />
 
       <img src={endline} alt="Example" />

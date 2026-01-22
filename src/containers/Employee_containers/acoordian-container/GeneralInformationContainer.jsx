@@ -8,11 +8,12 @@ import BankDetails from "../../../components/Employee_components/EmployeeOverVie
 import ReferenceBy from "../../../components/Employee_components/EmployeeOverViewScreens/BankInfoComponent/ReferenceByAccordian";
 
 
-import { useEmployeeReferenceBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
-
+import { useEmployeeReferenceBy, useEmployeeHiredBy } from "../../../queries/Employee_queries/OverViewsScreens/ReferenceBy";
+import HiredBy from "../../../components/Employee_components/EmployeeOverViewScreens/EmployeeQualificationDetails/HiredBy";
 const BankGeneralInfoContainer = ({ employeeId }) => {
   const [expanded, setExpanded] = useState(null);
   const { data: referenceData, isLoading, isError } = useEmployeeReferenceBy(employeeId);
+  const { data: hiredByData, isLoading: isHiredByLoading, isError: isHiredByError } = useEmployeeHiredBy(employeeId);
 
   return (
     <div className={styles.accordian_container}>
@@ -34,8 +35,17 @@ const BankGeneralInfoContainer = ({ employeeId }) => {
           isLoading={isLoading}
           isError={isError}
         />
+        <HiredBy
+          expanded={expanded === "hiredBy"}
+          onChange={(e, isOpen) =>
+            setExpanded(isOpen ? "hiredBy" : null)
+          }
+          referenceData={hiredByData}
+          isLoading={isHiredByLoading}
+          isError={isHiredByError}
+        />
 
-  
+
 
       </div>
       <figure className={styles.bottom_decoration}>

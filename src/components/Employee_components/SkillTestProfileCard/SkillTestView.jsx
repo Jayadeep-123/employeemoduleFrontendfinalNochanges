@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // --- Components ---
 // Adjust these import paths if your folders are named differently
@@ -11,8 +11,13 @@ import leftarrow from "../../../assets/Employee_asserts/EmployeeOnBoarding/lefta
 import Approve from "../../../assets/Employee_asserts/EmployeeOnBoarding/Approve";
 import rejecticon from "../../../assets/Employee_asserts/EmployeeOnBoarding/rejecticon.svg";
 
+// --- Queries ---
+import { useApproveSkillTest } from "../../../queries/Employee_queries/EmployeeSkillTest";
+
 const SkillTestView = () => {
   const navigate = useNavigate();
+  const { employeeId } = useParams();
+  const { mutate: approveSkillTest } = useApproveSkillTest();
 
   // 🔴 ROUTING LOGIC: Go back to the 'skillTest' Table
   const handleBackToTable = () => {
@@ -22,8 +27,18 @@ const SkillTestView = () => {
   };
 
   const handleApprove = () => {
-    console.log("Approved");
-    handleBackToTable();
+    if (!employeeId) return;
+
+    approveSkillTest(employeeId, {
+      onSuccess: () => {
+        console.log("Skill Test Approved successfully");
+        handleBackToTable();
+      },
+      onError: (error) => {
+        console.error("Failed to approve skill test:", error);
+        alert("Failed to approve skill test. Please try again.");
+      }
+    });
   };
 
   const handleReject = () => {
